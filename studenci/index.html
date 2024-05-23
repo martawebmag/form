@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="iso-8859-2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./image/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/789005376d.js" crossorigin="anonymous"></script>
+    <title>Obóz dla studentów</title>
+    <link rel="stylesheet" href="formularz.css" />
+    <link rel="stylesheet" href="media-queries.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js"></script>
+    <script src="app-studenci.js" defer></script>
+</head>
+
+<body>
+    <div class="form">
+        <div class="form-header">
+            <div class="header-container">
+                <h3>Wakacyjny obóz dla STUDENTÓW</h3>
+                <p><b>8 - 15 lipca 2024 r.</b> Gniezno</p>
+            </div>
+            <div class="header-container1">
+                <a href="studenci.html"><i class="fa-solid fa-circle-arrow-left"></i></a>
+            </div>
+
+        </div>
+
+        <div class="form-container">
+            <!-- Sidebar -->
+
+            <div class="form-sidebar">
+                <div class="step active" data-step="1">
+                    <div class="circle">1</div>
+                    <div class="step-content">
+                        <b>Dane osobowe</b>
+                    </div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="circle">2</div>
+                    <div class="step-content">
+                        <b>Adres</b>
+                    </div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="circle">3</div>
+                    <div class="step-content">
+                        <b>Kontakt</b>
+                    </div>
+                </div>
+
+                <div class="step" data-step="4">
+                    <div class="circle">4</div>
+                    <div class="step-content">
+                        <b>Zdrowie</b>
+                    </div>
+                </div>
+                <div class="step" data-step="5">
+                    <div class="circle">5</div>
+                    <div class="step-content">
+                        <b>Informacje</b>
+                    </div>
+                </div>
+                <div class="step" data-step="6">
+                    <div class="circle">6</div>
+                    <div class="step-content">
+                        <b>Zgody</b>
+                    </div>
+                </div>
+                <!-- <div class="step">
+                <div class="circle">8</div>
+                <div class="step-content">
+                    <b>Sukces</b>
+                </div>
+            </div> -->
+            </div>
+
+            <!-- Step -->
+            <form action="ex01.php" method="post" enctype="multipart/form-data" id="uczniowie-form">
+                <div class="stp step-1">
+                    <div class="header">
+                        <h1 class="title">Dane osobowe</h1>
+                    </div>
+
+                    <div class="form-field-box">
+                        <div class="label">
+                            <label for="name">Imię</label>
+                            <p class="error">Pole jest wymagane</p>
+                        </div>
+                        <input type="text" id="name" name="name" placeholder="Imię" class="form-validate" />
+                    </div>
+
+                    <div class="label">
+                        <label for="surname">Nazwisko</label>
+                        <p class="error">Pole jest wymagane</p>
+                    </div>
+                    <input type="text" id="surname" name="surname" placeholder="Nazwisko" class="form-validate" />
+
+                    <div class="label">
+                        <label for="pesel">PESEL</label>
+                        <p class="error">Pole jest wymagane</p>
+                    </div>
+                    <input type="text" id="pesel" name="pesel" placeholder="11-cyfrowy PESEL" class="form-validate" />
+
+                    <div class="label">
+                        <label for="data">Data urodzenia</label>
+                        <p class="error">Pole jest wymagane</p>
+                    </div>
+                    <input type="date" id="data" name="data" placeholder="data urodzenia" class="form-validate" />
+
+                    <div class="label">
+                        <label for="email">Email (dzielo.pl)</label>
+                        <p class="error">Pole jest wymagane</p>
+                    </div>
+                    <input type="email" id="email" name="email" placeholder="jan.kowalski@dzielo.pl"
+                        class="form-validate" />
+
+                    <div class="label">
+                        <label for="email2">Email prywatny</label>
+                        <p class="error">Pole jest wymagane</p>
+                    </div>
+                    <input type="email2" id="email2" name="email2" placeholder="nazwa@domena.pl"
+                        class="form-validate" />
+                    <div class="label">
+                        <label for="phone">Numer telefonu</label>
+                        <p class="error">Pole jest wymagane</p>
+                    </div>
+                    <input type="tel" id="phone" name="phone" placeholder="000000000" class="form-validate" />
+
+                    <div class="label">
+                        <label for="plec">Płeć:</label>
+                        <p class="error">Pole jest wymagane</p>
+                    </div>
+                    <select name="plec" placeholder="Wybierz płeć" id="plec" class="form-validate">
+                        <option value="">---</option>
+                        <option value="kobieta">Kobieta</option>
+                        <option value="mďż˝czyzna">Mężczyzna</option>
+                    </select>
+                    <p class="error">Wypeďż˝nij to pole</p>
+
+                    <div class="label">
+                        <label for="wspolnota">Wspólnota akademicka</label>
+                        <p class="error">Pole jest wymagane</p>
+                    </div>
+                    <select name="wspolnota" size="1" id="wspolnota" class="form-validate">
+                        <option value="">---</option>
+                        <option value="Biaďż˝ystok">Białystok</option>
+                        <option value="Bydgoszcz">Bydgoszcz</option>
+                        <option value="Gdaďż˝sk">Gdańsk</option>
+                        <option value="Katowice">Katowice</option>
+                        <option value="Kielce">Kielce</option>
+                        <option value="Krakďż˝w">Kraków</option>
+                        <option value="Lublin">Lublin</option>
+                        <option value="ďż˝ďż˝dz">Łódź</option>
+                        <option value="Olsztyn">Olsztyn</option>
+                        <option value="Opole">Opole</option>
+                        <option value="Poznaďż˝">Poznań</option>
+                        <option value="Rzeszďż˝w">Rzeszów</option>
+                        <option value="Szczecin">Szczecin</option>
+                        <option value="Toruďż˝">Toruń</option>
+                        <option value="Warszawa">Warszawa</option>
+                        <option value="Wrocďż˝aw">Wrocław</option>
+                        <option value="Student zagraniczny">Student zagraniczny</option>
+                    </select>
+                    <p class="error">Wypeďż˝nij to pole</p>
+
+                    <div class="btns">
+                        <button class="next-stp" type="button">Dalej</button>
+                    </div>
+                </div>
+
+                <div class="stp step-2">
+                    <div class="header">
+                        <h1 class="title">Adres zamieszkania</h1>
+                    </div>
+
+                    <div class="form-field">
+                        <div class="label">
+                            <label for="street">Ulica</label>
+                            <p class="error">Pole jest wymagane</p>
+                        </div>
+                        <input type="text" name="street" id="street" placeholder="Ulica" />
+                    </div>
+
+                    <div class="form-field">
+                        <div class="label">
+                            <label for="homeNumber">Numer domu</label>
+                            <p class="error">Pole jest wymagane</p>
+                        </div>
+                        <input type="text" id="homeNumber" name="homeNumber" placeholder="Numer domu"
+                            class="form-validate" />
+                    </div>
+
+                    <div class="form-field">
+                        <div class="label">
+                            <label for="flatNumber">Numer miekszania</label>
+                            <p class="error">Pole jest wymagane</p>
+                        </div>
+                        <input type="text" id="flatNumber" name="flatNumber" placeholder="Numer mieszkania" />
+                    </div>
+
+                    <div class="form-field">
+                        <div class="label">
+                            <label for="postcode">Kod pocztowy</label>
+                            <p class="error">Pole jest wymagane</p>
+                        </div>
+                        <input data-type="postcode" type="text" id="postcode" name="postcode" placeholder="_ _ - _ _ _"
+                            class="form-validate" />
+                    </div>
+
+                    <div class="form-field">
+                        <div class="label">
+                            <label for="post">Poczta</label>
+                            <p class="error">Pole jest wymagane</p>
+                        </div>
+                        <input type="text" id="post" name="post" placeholder="Poczta" class="form-validate" />
+                    </div>
+
+                    <div class="form-field">
+                        <div class="label">
+                            <label for="city">Miesjcowość</label>
+                            <p class="error">Pole jest wymagane</p>
+                        </div>
+                        <input type="text" id="city" name="city" placeholder="Miejscowość" class="form-validate" />
+                    </div>
+
+                    <div class="btns">
+                        <button class="prev-stp" type="button">Wstecz</button>
+                        <button class="next-stp" type="button">Dalej</button>
+                    </div>
+                </div>
+
+                <div class="stp step-3">
+                    <div class="header">
+                        <h1 class="title">Osoba do kontaktu</h1>
+                        <h4 class="title2">W razie wypadku lub innych nieprzewidzianych okoliczności należy powiadomić:
+                        </h4>
+                    </div>
+
+                    <div class="form-field">
+                        <div class="label">
+                            <label for="contactName">Imię</label>
+                            <p class="error">Pole jest wymagane</p>
+                        </div>
+                        <input type="text" id="contactName" name="contactName" placeholder="Imię"
+                            class="form-validate" />
+                    </div>
+                    <div class="form-field">
+                        <div class="label">
+                            <label for="contactSurname">Nazwisko</label>
+                            <p class="error">Pole jest wymagane</p>
+                        </div>
+                        <input type="text" id="contactSurname" name="contactSurname" placeholder="Nazwisko"
+                            class="form-validate" />
+                    </div>
+                    <div class="form-field">
+                        <div class="label">
+                            <label for="phone2">Telefon</label>
+                            <p class="error">Pole jest wymagane</p>
+                        </div>
+                        <input type="text" id="phone2" name="contactPhone" placeholder="000000000"
+                            class="form-validate" />
+                    </div>
+
+                    <div class="btns">
+                        <button class="prev-stp" type="button">Wstecz</button>
+                        <button class="next-stp" type="button">Dalej</button>
+                    </div>
+                </div>
+
+
+                <div class="stp step-4">
+                    <div class="header">
+                        <h1 class="title">Zdrowie</h1>
+                    </div>
+
+                    <div class="label textArea">
+                        <label for="textArea">Informacje o stanie zdrowia (choroby przewlekłe, na co
+                            aktualnie się leczysz, uczuleniach, znoszeniu jazdy samochodem,
+                            przyjmowanych lekach, zabiegach lub operacjach w ciągu
+                            ostatniego roku, ogólnym stanie zdrowia)</label>
+                    </div>
+                    <textarea name="zdrowie" style="max-width: 640px; height: 120px"
+                        placeholder="Wpisz informacje"></textarea>
+
+
+                    <div class="label">
+                        <label for="dieta">Specjalistyczna dieta:</label>
+                        <p class="error">Pole jest wymagane</p>
+                    </div>
+                    <select name="dieta" id="dieta" class="form-validate">
+                        <option value="">Wybierz</option>
+                        <option value="TAK">TAK</option>
+                        <option value="NIE">NIE</option>
+                    </select>
+
+                    <div id="ukryj1">
+						<div class="label">
+							<label for="jakaDieta">Jaka to dieta?</label>
+							<p class="error">Pole jest wymagane</p>
+						</div>
+						<input type="text" id="jakaDieta" name="jakaDieta" placeholder="Rodzaj diety" class="form-validate"/>
+					</div>
+
+                    <div id="ukryj">
+                        <div class="label textArea">
+                            <label for="textArea">W przypadku bardziej skomplikowanych diet (poza
+                                wegetariańską, bez laktozy, bez glutenu) proszę o poddanie przykładowych posiłków.
+                            </label>
+                        </div>
+
+                        <textarea name="dietaInfo" id="dietaInfo" class="dietaInfo" style="width: 600px; height: 120px"
+                            placeholder="Rodzaj diety / przykďż˝adowe posiďż˝ki"></textarea>
+                    </div>
+
+
+                    <div class="btns">
+                        <button class="prev-stp" type="button">Wstecz</button>
+                        <button class="next-stp" type="button">Dalej</button>
+                    </div>
+                </div>
+
+                <div class="stp step-5">
+                    <div class="header">
+                        <h1 class="title">Informacje dodatkowe</h1>
+                    </div>
+
+
+                    <div class="label">
+                        <label for="obrona">Czy przystępujesz w tym roku do obrony pracy licencjackiej / magisterskiej /
+                            inżynierskiej i termin obrony pokrywa się z czasem obozu?</label>
+                        <p class="error">Pole jest wymagane</p>
+                    </div>
+                    <select name="obrona" size="1" id="obrona">
+                        <option value="">-</option>
+                        <option value="TAK">TAK</option>
+                        <option value="NIE">NIE</option>
+                    </select>
+                    <p class="error">Wypeďż˝nij to pole</p>
+
+                    <div class="label">
+                        <label for="sesja">Czy przewidywany termin sesji egzaminacyjnej na twojej uczelni pokrywa się z
+                            czasem obozu?</label>
+                        <p class="error">Pole jest wymagane</p>
+                    </div>
+                    <select name="sesja" size="1" id="sesja">
+                        <option value="">-</option>
+                        <option value="TAK">TAK</option>
+                        <option value="NIE">NIE</option>
+                    </select>
+                    <p class="error">Wypeďż˝nij to pole</p>
+
+                    <div class="koniecSesji">
+                        <label style="color:rgb(214, 21, 21)" style="font-size:16px">Data zakończenia sesji
+                            egzaminacyjnej:</label> <input type="date" name="koniecSesji">
+                    </div>
+
+                    <div class="label">
+                        <label for="tshirt">Koszulka obozowa:</label>
+                        <p class="error">Pole jest wymagane</p>
+                    </div>
+                    <select name="tshirt" id="tshirt" class="form-validate">
+                        <option value="">Wybierz rozmiar</option>
+                        <option>XS</option>
+                        <option>S</option>
+                        <option>M</option>
+                        <option>L</option>
+                        <option>XL</option>
+                        <option>XXL</option>
+                        <option>XXXL</option>
+
+                    </select>
+                    <p class="error">Wypeďż˝nij to pole</p>
+
+                    <div class="label">
+                        <label for="chor">Chcę zaangażować się w chór obozowy:</label>
+                        <p class="error">Pole jest wymagane</p>
+                    </div>
+                    <select name="chor" size="1" id="chor">
+                        <option value="">-</option>
+                        <option value="TAK">TAK</option>
+                        <option value="NIE">NIE</option>
+                    </select>
+                    <p class="error">Wypeďż˝nij to pole</p>
+
+                    <div class="label">
+                        <label for="instrument">Gram na instrumencie:</label>
+                        <p class="error">Wypeďż˝nij to pole</p>
+                    </div>
+                    <input type="text" placeholder="nazwa instrumentu" id="instrument" name="instrument" />
+
+                    <div class="label">
+                        <label for="posluga">Czy chciałbyś zaangażować się w posługę liturgiczną podczas obozu?</label>
+                        <p class="error">Pole jest wymagane</p>
+                    </div>
+                    <select name="posluga" size="1" id="posluga">
+                        <option value="">-</option>
+                        <option value="TAK">TAK</option>
+                        <option value="NIE">NIE</option>
+                    </select>
+                    <p class="error">Wypeďż˝nij to pole</p>
+
+                    <div class="label">
+                        <label for="medycyna">Czy jesteś studentem kierunku medycznego?</label>
+                        <p class="error">Pole jest wymagane</p>
+                    </div>
+                    <select name="medycyna" size="1" id="medycyna">
+                        <option value="">-</option>
+                        <option value="TAK">TAK</option>
+                        <option value="NIE">NIE</option>
+                    </select>
+                    <p class="error">Wypeďż˝nij to pole</p>
+
+                    <div class="label textArea">
+                        <label for="textArea">UWAGI DODATKOWE np. informacje o: specjalnych warunkach noclegu z uwagi na stan zdrowia; przewidywanym terminie obrony lub datach egzaminów w czasie sesji itd.]</label>
+                    </div>
+                    <textarea name="uwagi" style="max-width: 640px; height: 70px" placeholder="Uwagi"></textarea>
+
+                    <div class="btns">
+                        <button class="prev-stp" type="button">Wstecz</button>
+                        <button class="next-stp" type="button">Dalej</button>
+                    </div>
+                </div>
+
+                <div class="stp step-6">
+                    <div class="header">
+                        <h1 class="title">Zgody</h1>
+                    </div>
+                    <br>
+
+                    <div class="label check">
+                        <label for="regulamin" style="font-size: 15px">
+                            <p class="error">Wypeďż˝nij to pole</p>
+                            <input type="checkbox" name="regulamin" id="regulamin" value="tak"
+                                class="checkbox form-validate" />&nbsp;&nbsp;Zapoznałem się z regulaminem obozu i
+                            akceptuję
+                            jego wymagania =>
+                            <a href="./zalaczniki/regulamin_2021.pdf" target="_blank">Regulamin obozu</a>
+                        </label>
+
+                    </div>
+
+                    <div class="label check">
+                        <label for="szpital" style="font-size: 15px">
+                            <p class="error">Wypeďż˝nij to pole</p>
+                            <input class="checkbox form-validate" id="szpital" type="checkbox" name="szpital"
+                                value="tak" />&nbsp;&nbsp;W razie zagrożenia życia wyrażam zgodę na leczenie
+                            szpitalne, zabiegi diagnostyczne, operacje.
+                        </label>
+
+                    </div>
+
+                    <div class="label check">
+                        <label for="elektronika" style="font-size: 15px">
+                            <p class="error">Wypeďż˝nij to pole</p>
+                            <input class="checkbox form-validate" id="elektronika" type="checkbox" name="elektronika"
+                                value="tak" />&nbsp;&nbsp;Niniejszym oświadczam, że ponoszę wszelką
+                            odpowiedzialność za wszystkie sprzęty i urządzenia elektroniczne
+                            przywiezione przeze mnie na obóz.
+                        </label>
+
+                    </div>
+
+                    <div class="label check">
+                        <label for="rodo" style="font-size: 15px">
+                            <p class="error">Wypeďż˝nij to pole</p>
+                            <input class="checkbox form-validate" id="rodo" type="checkbox" name="rodo"
+                                value="tak" />&nbsp;&nbsp;Wyrażam zgodę na przetwarzanie moich danych
+                            osobowych przesłanych przy pomocy formularza dla potrzeb
+                            niezbędnych do uczestnictwa w obozach integracyjno-formacyjnych
+                            organizowanych przez Fundację "Dzieło Nowego Tysiąclecia"
+                            zgodnie z dokumentem elektronicznym:
+                            <a href="./zalaczniki/klauzula.pdf" target="_blank">KLAUZULA DO "ZGŁOSZENIA NA OBÓZ FUNDACJI
+                                DZIEŁO NOWEGO
+                                TYSIĄCLECIA"</a>
+                        </label>
+
+                    </div>
+
+                    <div class="label check">
+                        <label for="wizerunek" style="font-size: 15px">
+                            <p class="error">coďż˝</p>
+                            <input class="checkbox form-validate" id="wizerunek" type="checkbox" name="wizerunek"
+                                value="tak" />&nbsp;&nbsp;Wyrażam zgodę na przetwarzanie mojego wizerunku do
+                            celów związanych z promocja Fundacji "Dzieło Nowego
+                            Tysiąclecia", co oznacza, że fotografie, filmy lub nagrania
+                            wykonane podczas obozu mogą być zamieszczone na stronie
+                            internetowej i mediach społeczościowych Fundacji lub
+                            wykorzystywane w jej materiałach promocyjnych.
+                        </label>
+                    </div>
+
+                    <div class="btns">
+                        <button class="prev-stp" type="button">Wstecz</button>
+                        <button class="next-stp send" id="send-button" type="button">Wyślij formularz</button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</body>
+
+</html>
