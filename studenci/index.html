@@ -81,7 +81,7 @@
             </div>
 
             <!-- Step -->
-            <form action="ex01.php" method="post" enctype="multipart/form-data" id="uczniowie-form">
+            <form action="ex01-PDO_2.php" method="post" enctype="multipart/form-data" id="uczniowie-form" onsubmit="return confirmUpdateIfNeeded(event)">
                 <div class="stp step-1">
                     <div class="header">
                         <h1 class="title">Dane osobowe</h1>
@@ -139,7 +139,7 @@
                     <select name="plec" placeholder="Wybierz p³eæ" id="plec" class="form-validate">
                         <option value="">---</option>
                         <option value="kobieta">Kobieta</option>
-                        <option value="mï¿½czyzna">Mê¿czyzna</option>
+                        <option value="mê¿czyzna">Mê¿czyzna</option>
                     </select>
                     <p class="error">Wypeï¿½nij to pole</p>
 
@@ -149,22 +149,22 @@
                     </div>
                     <select name="wspolnota" size="1" id="wspolnota" class="form-validate">
                         <option value="">---</option>
-                        <option value="Biaï¿½ystok">Bia³ystok</option>
+                        <option value="Bia³ystok">Bia³ystok</option>
                         <option value="Bydgoszcz">Bydgoszcz</option>
-                        <option value="Gdaï¿½sk">Gdañsk</option>
+                        <option value="Gdañsk">Gdañsk</option>
                         <option value="Katowice">Katowice</option>
                         <option value="Kielce">Kielce</option>
-                        <option value="Krakï¿½w">Kraków</option>
+                        <option value="Kraków">Kraków</option>
                         <option value="Lublin">Lublin</option>
-                        <option value="ï¿½ï¿½dz">£ód¼</option>
+                        <option value="£ód¼">£ód¼</option>
                         <option value="Olsztyn">Olsztyn</option>
                         <option value="Opole">Opole</option>
-                        <option value="Poznaï¿½">Poznañ</option>
-                        <option value="Rzeszï¿½w">Rzeszów</option>
+                        <option value="Poznañ">Poznañ</option>
+                        <option value="Rzeszów">Rzeszów</option>
                         <option value="Szczecin">Szczecin</option>
-                        <option value="Toruï¿½">Toruñ</option>
+                        <option value="Toruñ">Toruñ</option>
                         <option value="Warszawa">Warszawa</option>
-                        <option value="Wrocï¿½aw">Wroc³aw</option>
+                        <option value="Wroc³aw">Wroc³aw</option>
                         <option value="Student zagraniczny">Student zagraniczny</option>
                     </select>
                     <p class="error">Wypeï¿½nij to pole</p>
@@ -315,7 +315,7 @@
                         </div>
 
                         <textarea name="dietaInfo" id="dietaInfo" class="dietaInfo" style="width: 600px; height: 120px"
-                            placeholder="Rodzaj diety / przykï¿½adowe posiï¿½ki"></textarea>
+                            placeholder="Rodzaj diety / przyk³adowe posi³ki"></textarea>
                     </div>
 
 
@@ -505,6 +505,7 @@
 
         </div>
     </div>
+
 </body>
 
 </html>

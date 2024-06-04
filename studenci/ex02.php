@@ -15,7 +15,7 @@ if (!$conn) {
 }
 
 // Przetwórz dane formularza
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST['submit'])) {
     // Dane z formularza
    		$name = $_POST["name"];
 		$surname = $_POST["surname"];
@@ -68,47 +68,101 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = mysqli_fetch_assoc($result);
         $dane_id = $row['id'];
 
-        // Dodaj zg³oszenie do tabeli "info_obozowe"
-        $sql = "INSERT INTO 2024_studenci_4_info_obozowe (dane_id, zdrowie, dieta, dieta_szczegoly, obrona, sesja, koniec_sesji, koszulka_rozmiar, chor, instrument, posluga, medycyna, uwagi, zgoda_regulamin, zgoda_szpital, zgoda_elektronika, zgoda_rodo, zgoda_wizerunek, data_zgloszenia_info) 
-		VALUES ('$dane_id', '$zdrowie', '$dieta', '$dietaInfo', '$obrona', '$sesja', '$koniecSesji', '$koszulka', '$chor', '$instrument', '$posluga', '$medycyna', '$uwagi', '$regulamin', '$szpital', '$elektronika', '$rodo', '$wizerunek', '$data_zgloszenia_info')";
+
+			// Zaktualizuj dane u¿ytkownika w tabeli "uzytkownicy"
+			$update_user_sql = "UPDATE 2024_studenci_1_dane_osobowe SET email_prywatny='$email_priv', numer_telefonu='$phone' WHERE id=$dane_id";
+			if (mysqli_query($conn, $update_user_sql)) {
+				echo "Dane u¿ytkownika zaktualizowane pomy¶lnie.<br>";
+			} else {
+				echo "B³±d podczas aktualizacji danych u¿ytkownika: " . mysqli_error($conn) . "<br>";
+				exit; // Zakoñcz skrypt w przypadku b³êdu
+			}
+			} else {
+			// U¿ytkownik nie istnieje, dodaj nowego u¿ytkownika
+			$insert_user_sql = "INSERT INTO 2024_studenci_1_dane_osobowe (imie, nazwisko, pesel, data_urodzenia, email, email_prywatny, numer_telefonu, plec, wspolnota, data_zgloszenia) 
+			VALUES ('$name', '$surname', '$pesel', '$data', '$email', '$email_priv', '$phone', '$plec', '$wspolnota', '$data_zgloszenia')";
+			if (mysqli_query($conn, $insert_user_sql)) {
+				// Ponownie uzyskaj identyfikator u¿ytkownika na podstawie numeru PESEL
+				$result = mysqli_query($conn, "SELECT id FROM 2024_studenci_1_dane_osobowe WHERE pesel = '$pesel'");
+				if (mysqli_num_rows($result) > 0) {
+					$row = mysqli_fetch_assoc($result);
+					$dane_id = $row['id'];
+					echo "Dodano nowego u¿ytkownika.<br>";
+				} else {
+					echo "B³±d podczas uzyskiwania identyfikatora nowego u¿ytkownika.<br>";
+					exit; // Zakoñcz skrypt w przypadku b³êdu
+				}
+			} else {
+				echo "B³±d podczas dodawania nowego u¿ytkownika: " . mysqli_error($conn) . "<br>";
+				exit; // Zakoñcz skrypt w przypadku b³êdu
+			}
+			}
+
+			// Dodaj nowe zg³oszenie do tabeli "zgloszenia"
+			$insert_zgloszenie_sql = "INSERT INTO 2024_studenci_4_info_obozowe (dane_id, zdrowie, dieta, dieta_szczegoly, obrona, sesja, koniec_sesji, koszulka_rozmiar, chor, instrument, posluga, medycyna, uwagi, zgoda_regulamin, zgoda_szpital, zgoda_elektronika, zgoda_rodo, zgoda_wizerunek, data_zgloszenia_info) 
+			VALUES ('$dane_id', '$zdrowie', '$dieta', '$dietaInfo', '$obrona', '$sesja', '$koniecSesji', '$koszulka', '$chor', '$instrument', '$posluga', '$medycyna', '$uwagi', '$regulamin', '$szpital', '$elektronika', '$rodo', '$wizerunek', '$data_zgloszenia_info')";
+			if (mysqli_query($conn, $insert_zgloszenie_sql)) {
+			echo "Zg³oszenie dodane pomy¶lnie!";
+			} else {
+			echo "B³±d podczas dodawania zg³oszenia: " . mysqli_error($conn);
+			}
+
+			// Zamknij po³±czenie z baz± danych
+			mysqli_close($conn);
+			}
+		
+
+//         // Dodaj zg³oszenie do tabeli "info_obozowe"
+//         $sql = "INSERT INTO 2024_studenci_4_info_obozowe (dane_id, zdrowie, dieta, dieta_szczegoly, obrona, sesja, koniec_sesji, koszulka_rozmiar, chor, instrument, posluga, medycyna, uwagi, zgoda_regulamin, zgoda_szpital, zgoda_elektronika, zgoda_rodo, zgoda_wizerunek, data_zgloszenia_info) 
+// 		VALUES ('$dane_id', '$zdrowie', '$dieta', '$dietaInfo', '$obrona', '$sesja', '$koniecSesji', '$koszulka', '$chor', '$instrument', '$posluga', '$medycyna', '$uwagi', '$regulamin', '$szpital', '$elektronika', '$rodo', '$wizerunek', '$data_zgloszenia_info')";
 
 
-        if (mysqli_query($conn, $sql))  {
-			header('Location: http://localhost/formularz_studenci_nowy02/studenci/sukces.html');
-        } else {
-            echo "B³±d: " . mysqli_error($conn);
-        }
-    } else {
-		//nie ma jescze u¿ytownika o podanym peselu - dodajemy nowego
-        $zapytanie1 = "INSERT INTO 2024_studenci_1_dane_osobowe (imie, nazwisko, pesel, data_urodzenia, email, email_prywatny, numer_telefonu, plec, wspolnota, data_zgloszenia) 
-		VALUES ('$name', '$surname', '$pesel', '$data', '$email', '$email_priv', '$phone', '$plec', '$wspolnota', '$data_zgloszenia')";
+//         if (mysqli_query($conn, $sql))  {
+// 			header('Location: http://localhost/formularz_studenci_nowy02/studenci/sukces.html');
+//         } else {
+//             echo "B³±d: " . mysqli_error($conn);
+//         }
+
+// 		// Zaktualizuj dane u¿ytkownika w tabeli "2024_studenci_1_dane_osobowe"
+// 		$update_user_sql = "UPDATE 2024_studenci_1_dane_osobowe SET email_prywatny='$email_priv', numer_telefonu='$phone' WHERE id=$dane_id";
+// 		if (mysqli_query($conn, $update_user_sql)) {
+// 			echo "Dane u¿ytkownika zaktualizowane pomy¶lnie.<br>";
+// 		} else {
+// 			echo "B³±d podczas aktualizacji danych u¿ytkownika: " . mysqli_error($conn) . "<br>";
+// 		}
 
 
-		$zapytanie2 = "INSERT INTO 2024_studenci_2_adres (ulica, numer_domu, numer_mieszkania, kod_pocztowy, poczta, miejscowosc) 
-		VALUES ('$street', '$homeNumber', '$flatNumber', '$postcode', '$post', '$city')";
+//     } else {
+// 		//nie ma jescze u¿ytownika o podanym peselu - dodajemy nowego
+//         $zapytanie1 = "INSERT INTO 2024_studenci_1_dane_osobowe (imie, nazwisko, pesel, data_urodzenia, email, email_prywatny, numer_telefonu, plec, wspolnota, data_zgloszenia) 
+// 		VALUES ('$name', '$surname', '$pesel', '$data', '$email', '$email_priv', '$phone', '$plec', '$wspolnota', '$data_zgloszenia')";
 
 
-		$zapytanie3 = "INSERT INTO 2024_studenci_3_kontakt (imie_kontaktu, nazwisko_kontaktu, telefon_kontaktowy) 
-		VALUES ('$contactName', '$contactSurname', '$contactPhone')";
+// 		$zapytanie2 = "INSERT INTO 2024_studenci_2_adres (ulica, numer_domu, numer_mieszkania, kod_pocztowy, poczta, miejscowosc) 
+// 		VALUES ('$street', '$homeNumber', '$flatNumber', '$postcode', '$post', '$city')";
 
 
-		$zapytanie4 = "INSERT INTO 2024_studenci_4_info_obozowe (zdrowie, dieta, dieta_szczegoly, obrona, sesja, koniec_sesji, koszulka_rozmiar, chor, instrument, posluga, medycyna, uwagi, zgoda_regulamin, zgoda_szpital, zgoda_elektronika, zgoda_rodo, zgoda_wizerunek, data_zgloszenia_info) 
-		VALUES ( '$zdrowie', '$dieta', '$dietaInfo', '$obrona', '$sesja', '$koniecSesji', '$koszulka', '$chor', '$instrument', '$posluga', '$medycyna', '$uwagi', '$regulamin', '$szpital', '$elektronika', '$rodo', '$wizerunek', '$data_zgloszenia_info' )";
+// 		$zapytanie3 = "INSERT INTO 2024_studenci_3_kontakt (imie_kontaktu, nazwisko_kontaktu, telefon_kontaktowy) 
+// 		VALUES ('$contactName', '$contactSurname', '$contactPhone')";
+
+
+// 		$zapytanie4 = "INSERT INTO 2024_studenci_4_info_obozowe (zdrowie, dieta, dieta_szczegoly, obrona, sesja, koniec_sesji, koszulka_rozmiar, chor, instrument, posluga, medycyna, uwagi, zgoda_regulamin, zgoda_szpital, zgoda_elektronika, zgoda_rodo, zgoda_wizerunek, data_zgloszenia_info) 
+// 		VALUES ( '$zdrowie', '$dieta', '$dietaInfo', '$obrona', '$sesja', '$koniecSesji', '$koszulka', '$chor', '$instrument', '$posluga', '$medycyna', '$uwagi', '$regulamin', '$szpital', '$elektronika', '$rodo', '$wizerunek', '$data_zgloszenia_info' )";
   
 
 
 
-			$wynik_zapytania1z4 = mysqli_query($conn,$zapytanie1);
-			$wynik_zapytania2z4 = mysqli_query($conn,$zapytanie2);
-			$wynik_zapytania3z4 = mysqli_query($conn,$zapytanie3);
-			$wynik_zapytania4z4 = mysqli_query($conn,$zapytanie4);
+// 			$wynik_zapytania1z4 = mysqli_query($conn,$zapytanie1);
+// 			$wynik_zapytania2z4 = mysqli_query($conn,$zapytanie2);
+// 			$wynik_zapytania3z4 = mysqli_query($conn,$zapytanie3);
+// 			$wynik_zapytania4z4 = mysqli_query($conn,$zapytanie4);
 
-			header('Location: http://localhost/formularz_studenci_nowy02/studenci/sukces.html');
-    }
+// 			header('Location: http://localhost/formularz_studenci_nowy02/studenci/sukces.html');
+//     }
 
-    // Zamknij po³±czenie z baz± danych
-    mysqli_close($conn);
-}
+//     // Zamknij po³±czenie z baz± danych
+//     mysqli_close($conn);
+// }
 
 
 
