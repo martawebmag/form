@@ -64,10 +64,11 @@ try {
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
-            // U¿ytkownik istnieje, pobierz jego ID i zaktualizuj dane
+            // U¿ytkownik istnieje, pobierz jego id 
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             $dane_id = $row['id'];
-            
+
+           
 
             // Sprawd¼, czy istnieje zg³oszenie w bie¿±cym roku
             $current_year = date('Y');
@@ -80,52 +81,47 @@ try {
                 // Istnieje zg³oszenie w bie¿±cym roku, zapytaj u¿ytkownika o aktualizacjê
                 $_SESSION['form_data'] = $_POST;
                 $_SESSION['dane_id'] = $dane_id;  // Przechowaj dane_id w sesji
-                header('Location: http://localhost/formularz_studenci_nowy03/studenci/pdo_update.php');
+                header('Location: http://localhost/formularz_studenci_nowy04/studenci/pdo_update.php');
                 exit;
             } else {
                 // Brak zg³oszenia w bie¿±cym roku, dodaj nowe zg³oszenie
-                $stmt = $conn->prepare("INSERT INTO 2024_studenci_4_info_obozowe (dane_id, zdrowie, dieta, jaka_dieta, dieta_szczegoly, obrona, sesja, koniec_sesji, koszulka_rozmiar, chor, instrument, posluga, medycyna, uwagi, zgoda_regulamin, zgoda_szpital, zgoda_elektronika, zgoda_rodo, zgoda_wizerunek, data_zgloszenia_info) VALUES (:dane_id, :zdrowie, :dieta, :jakaDieta, :dieta_szczegoly, :obrona, :sesja, :koniec_sesji, :koszulka_rozmiar, :chor, :instrument, :posluga, :medycyna, :uwagi, :zgoda_regulamin, :zgoda_szpital, :zgoda_elektronika, :zgoda_rodo, :zgoda_wizerunek, NOW())");
+              
+
+                $stmt = $conn->prepare("INSERT INTO 2024_studenci_4_info_obozowe (dane_id, zdrowie, dieta, jaka_dieta, dieta_szczegoly, obrona, sesja, koniec_sesji, koszulka_rozmiar, chor, instrument, posluga, medycyna, uwagi, zgoda_regulamin, zgoda_szpital, zgoda_elektronika, zgoda_rodo, zgoda_wizerunek, data_zgloszenia_info) VALUES (:dane_id, :zdrowie, :dieta, :jakaDieta, :dieta_szczegoly, :obrona, :sesja, :koniec_sesji, :koszulka_rozmiar, :chor, :instrument, :posluga, :medycyna, :uwagi, :zgoda_regulamin, :zgoda_szpital, :zgoda_elektronika, :zgoda_rodo, :zgoda_wizerunek, :data_zgloszenia_info)");
                 $stmt->bindParam(':dane_id', $dane_id);
                 $stmt->bindParam(':zdrowie', $zdrowie);
                 $stmt->bindParam(':dieta', $dieta);
                 $stmt->bindParam(':jakaDieta', $jakaDieta);
-                $stmt->bindParam(':dieta_szczegoly', $dieta_szczegoly);
+                $stmt->bindParam(':dieta_szczegoly', $dietaInfo);
                 $stmt->bindParam(':obrona', $obrona);
                 $stmt->bindParam(':sesja', $sesja);
-                $stmt->bindParam(':koniec_sesji', $koniec_sesji);
-                $stmt->bindParam(':koszulka_rozmiar', $koszulka_rozmiar);
+                $stmt->bindParam(':koniec_sesji', $koniecSesji);
+                $stmt->bindParam(':koszulka_rozmiar', $koszulka);
                 $stmt->bindParam(':chor', $chor);
                 $stmt->bindParam(':instrument', $instrument);
                 $stmt->bindParam(':posluga', $posluga);
                 $stmt->bindParam(':medycyna', $medycyna);
                 $stmt->bindParam(':uwagi', $uwagi);
-                $stmt->bindParam(':zgoda_regulamin', $zgoda_regulamin);
-                $stmt->bindParam(':zgoda_szpital', $zgoda_szpital);
-                $stmt->bindParam(':zgoda_elektronika', $zgoda_elektronika);
-                $stmt->bindParam(':zgoda_rodo', $zgoda_rodo);
-                $stmt->bindParam(':zgoda_wizerunek', $zgoda_wizerunek);
-                $stmt->execute();
+                $stmt->bindParam(':zgoda_regulamin', $regulamin);
+                $stmt->bindParam(':zgoda_szpital', $szpital);
+                $stmt->bindParam(':zgoda_elektronika', $elektronika);
+                $stmt->bindParam(':zgoda_rodo', $rodo);
+                $stmt->bindParam(':zgoda_wizerunek', $wizerunek);
+                $stmt->bindParam(':data_zgloszenia_info', $data_zgloszenia);
+                if (!$stmt->execute()) {
+                    throw new Exception("B³±d podczas dodawania zg³oszenia.");
+                }
+               
+                $stmt = $conn->prepare("UPDATE 2024_studenci_1_dane_osobowe SET nazwisko=:nazwisko, email_prywatny=:email_prywatny, numer_telefonu=:numer_telefonu WHERE id=:id");
+                $stmt->bindParam(':nazwisko', $surname);
+                $stmt->bindParam(':email_prywatny', $email_priv);
+                $stmt->bindParam(':numer_telefonu', $phone);
+                $stmt->bindParam(':id', $dane_id);
+                if (!$stmt->execute()) {
+                    throw new Exception("B³±d podczas aktualizacji danych u¿ytkownika.");
+                    }
 
-                echo "Zg³oszenie zosta³o zapisane.";
-            }
-
-            // Zaktualizuj dane u¿ytkownika w tabeli "2024_studenci_1_dane_osobowe"
-            $stmt = $conn->prepare("UPDATE 2024_studenci_1_dane_osobowe SET nazwisko=:nazwisko, email_prywatny=:email_prywatny, numer_telefonu=:numer_telefonu WHERE id=:id");
-            $stmt->bindParam(':nazwisko', $surname);
-            $stmt->bindParam(':email_prywatny', $email_priv);
-            $stmt->bindParam(':numer_telefonu', $phone);
-            $stmt->bindParam(':id', $dane_id);
-            if (!$stmt->execute()) {
-                throw new Exception("B³±d podczas aktualizacji danych u¿ytkownika.");
-            }
-
-            // Sprawd¼, czy s± dane adresowe
-            $stmt = $conn->prepare("SELECT id FROM 2024_studenci_2_adres WHERE dane_id = :dane_id");
-            $stmt->bindParam(':dane_id', $dane_id);
-            $stmt->execute();
-            if ($stmt->rowCount() > 0) {
-                // Dane adresowe istniej±, zaktualizuj je
-                $stmt = $conn->prepare("UPDATE 2024_studenci_2_adres SET ulica=:ulica, numer_domu=:numer_domu, numer_mieszkania=:numer_mieszkania, kod_pocztowy=:kod_pocztowy, poczta=:poczta, miejscowosc=:miejscowosc WHERE dane_id=:dane_id");
+                $stmt = $conn->prepare("UPDATE 2024_studenci_2_adres SET ulica=:ulica, numer_domu=:numer_domu,numer_mieszkania=:numer_mieszkania, kod_pocztowy=:kod_pocztowy, poczta=:poczta, miejscowosc=:miejscowosc WHERE dane_id=:dane_id");
                 $stmt->bindParam(':ulica', $street);
                 $stmt->bindParam(':numer_domu', $homeNumber);
                 $stmt->bindParam(':numer_mieszkania', $flatNumber);
@@ -133,30 +129,10 @@ try {
                 $stmt->bindParam(':poczta', $post);
                 $stmt->bindParam(':miejscowosc', $city);
                 $stmt->bindParam(':dane_id', $dane_id);
-                if (!$stmt->execute()) {
+                 if (!$stmt->execute()) {
                     throw new Exception("B³±d podczas aktualizacji danych adresowych u¿ytkownika.");
-                }
-            } else {
-                // Brak danych adresowych, dodaj nowe dane
-                $stmt = $conn->prepare("INSERT INTO 2024_studenci_2_adres (ulica, numer_domu, numer_mieszkania, kod_pocztowy, poczta, miejscowosc, dane_id) VALUES (:ulica, :numer_domu, :numer_mieszkania, :kod_pocztowy, :poczta, :miejscowosc, :dane_id)");
-                $stmt->bindParam(':ulica', $street);
-                $stmt->bindParam(':numer_domu', $homeNumber);
-                $stmt->bindParam(':numer_mieszkania', $flatNumber);
-                $stmt->bindParam(':kod_pocztowy', $postcode);
-                $stmt->bindParam(':poczta', $post);
-                $stmt->bindParam(':miejscowosc', $city);
-                $stmt->bindParam(':dane_id', $dane_id);
-                if (!$stmt->execute()) {
-                    throw new Exception("B³±d podczas dodawania danych adresowych.");
-                }
-            }
+                 }
 
-            // Analogicznie dla danych kontaktowych
-            $stmt = $conn->prepare("SELECT id FROM 2024_studenci_3_kontakt WHERE dane_id = :dane_id");
-            $stmt->bindParam(':dane_id', $dane_id);
-            $stmt->execute();
-            if ($stmt->rowCount() > 0) {
-                // Dane kontaktowe istniej±, zaktualizuj je
                 $stmt = $conn->prepare("UPDATE 2024_studenci_3_kontakt SET imie_kontaktu=:imie_kontaktu, nazwisko_kontaktu=:nazwisko_kontaktu, telefon_kontaktowy=:telefon_kontaktowy WHERE dane_id=:dane_id");
                 $stmt->bindParam(':imie_kontaktu', $contactName);
                 $stmt->bindParam(':nazwisko_kontaktu', $contactSurname);
@@ -164,18 +140,13 @@ try {
                 $stmt->bindParam(':dane_id', $dane_id);
                 if (!$stmt->execute()) {
                     throw new Exception("B³±d podczas aktualizacji danych kontaktowych u¿ytkownika.");
-                }
-            } else {
-                // Brak danych kontaktowych, dodaj nowe dane
-                $stmt = $conn->prepare("INSERT INTO 2024_studenci_3_kontakt (imie_kontaktu, nazwisko_kontaktu, telefon_kontaktowy, dane_id) VALUES (:imie_kontaktu, :nazwisko_kontaktu, :telefon_kontaktowy, :dane_id)");
-                $stmt->bindParam(':imie_kontaktu', $contactName);
-                $stmt->bindParam(':nazwisko_kontaktu', $contactSurname);
-                $stmt->bindParam(':telefon_kontaktowy', $contactPhone);
-                $stmt->bindParam(':dane_id', $dane_id);
-                if (!$stmt->execute()) {
-                    throw new Exception("B³±d podczas dodawania danych kontaktowych.");
-                }
+                    }
+
+                    header('Location: http://localhost/formularz_studenci_nowy04/studenci/sukces.html');
             }
+
+
+
 
         } else {
             // U¿ytkownik nie istnieje, dodaj nowego u¿ytkownika
@@ -217,8 +188,6 @@ try {
             if (!$stmt->execute()) {
                 throw new Exception("B³±d podczas dodawania danych kontaktowych.");
             }
-        }
-
 
         // Dodaj nowe zg³oszenie do tabeli "2024_studenci_4_info_obozowe"
 		$stmt = $conn->prepare("INSERT INTO 2024_studenci_4_info_obozowe (dane_id, zdrowie, dieta, jaka_dieta, dieta_szczegoly, obrona, sesja, koniec_sesji, koszulka_rozmiar, chor, instrument, posluga, medycyna, uwagi, zgoda_regulamin, zgoda_szpital, zgoda_elektronika, zgoda_rodo, zgoda_wizerunek, data_zgloszenia_info) VALUES (:dane_id, :zdrowie, :dieta, :jakaDieta, :dieta_szczegoly, :obrona, :sesja, :koniec_sesji, :koszulka_rozmiar, :chor, :instrument, :posluga, :medycyna, :uwagi, :zgoda_regulamin, :zgoda_szpital, :zgoda_elektronika, :zgoda_rodo, :zgoda_wizerunek, :data_zgloszenia_info)");
@@ -246,7 +215,12 @@ try {
             throw new Exception("B³±d podczas dodawania zg³oszenia.");
         }
 
-		header('Location: http://localhost/formularz_studenci_nowy03/studenci/sukces.html');
+		header('Location: http://localhost/formularz_studenci_nowy04/studenci/sukces.html');
+
+        }
+
+
+
     }
 } catch (PDOException $e) {
     echo "B³±d PDO: " . $e->getMessage();

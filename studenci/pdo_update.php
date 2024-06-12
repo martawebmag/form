@@ -74,9 +74,9 @@ try {
             }
 
 
-            header('Location: http://localhost/formularz_studenci_nowy03/studenci/sukces.html');
+            header('Location: http://localhost/formularz_studenci_nowy04/studenci/sukces.html');
         } else {
-            echo "Aktualizacja zg³oszenia zosta³a anulowana.";
+            header('Location: http://localhost/formularz_studenci_nowy04/studenci/sukces.html');
         }
 
         // Wyczyszczenie sesji

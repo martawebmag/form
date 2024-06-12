@@ -31,21 +31,22 @@
 				<div class="title">aktualizacja danych</div>
 			</div>
 
-			<div class="box">
+			<div class="box" style="width: 700px; display: block; margin-left: 50px;">
 				<br>
-													
-                      <p style="font-size: 22px;">Witaj! Juz zapisales sie na oboz w tym roku. Czy chcesz zaktualizowac swoje zgloszenie nadpisujac dane?</p>
+			
+						<p style="font-size: 18px;">Witaj! <br><br>Zapisales sie juz na oboz w tym roku. Czy chcesz zaktualizowac swoje zgloszenie nadpisujac dane?</p>
                         <br>
-                        <form method="post" action="">
+                        <form method="post" action="" style="font-size: 18px;">
                             <input type="hidden" name="dane_id" value="<?php echo $dane_id; ?>">
                             <input type="radio" id="yes" name="update" value="yes" required>
                             <label for="yes">Tak</label><br>
                             <input type="radio" id="no" name="update" value="no">
                             <label for="no">Nie</label><br>
                             <br>
-                            <input type="submit" value="Potwierdz" style="margin: 10px; background-color: #f0cf11; padding: 10px 20px; border-radius: 4px; cursor: pointer">
+                            <input type="submit" value="Potwierdz" style="margin: 10px; background-color: #f0cf11; padding: 10px 20px; border-radius: 4px; cursor: pointer; text-transform: uppercase; box-shadow: 3px 3px 3px #534b1d;">
                         </form>
-         
+
+		        
 					
 			</div>
             <br><br><br><br>
