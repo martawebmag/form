@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pl">
+	<head>
+		<meta charset="iso-8859-2" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Formularz zapisu na obóz</title>
+		<script
+			src="https://kit.fontawesome.com/789005376d.js"
+			crossorigin="anonymous"
+		></script>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="shortcut icon" type="image/icon" href="image/favicon.ico" />
+		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="media-queries2.css">
+	</head>
+	<body>
+		<div class="form-container">
+			<div class="header">
+				<div class="title-img">
+					<img src="image/header-1.jpg" alt="logo Fundacji" />
+				</div>
+				<div class="title-img-min">
+					<img src="image/logo.jpg" alt="logo Fundacji" />
+				</div>
+				<div class="title">aktualizacja danych</div>
+			</div>
+
+			<div class="box">
+				<br>
+													
+                      <p style="font-size: 22px;">Witaj! Juz zapisales sie na oboz w tym roku. Czy chcesz zaktualizowac swoje zgloszenie nadpisujac dane?</p>
+                        <br>
+                        <form method="post" action="">
+                            <input type="hidden" name="dane_id" value="<?php echo $dane_id; ?>">
+                            <input type="radio" id="yes" name="update" value="yes" required>
+                            <label for="yes">Tak</label><br>
+                            <input type="radio" id="no" name="update" value="no">
+                            <label for="no">Nie</label><br>
+                            <br>
+                            <input type="submit" value="Potwierdz" style="margin: 10px; background-color: #f0cf11; padding: 10px 20px; border-radius: 4px; cursor: pointer">
+                        </form>
+         
+					
+			</div>
+            <br><br><br><br>
+		
+			<hr />
+			<div class="footer">
+				<footer class="footer">
+					<p>
+						&copy; 2024 Fundacja Dzieło Nowego Tysiąclecia
+	
+					</p>
+				</footer>
+			</div>
+		
+		</div>
+		
+	</body>
+</html>
+
+
+
+
+
+
